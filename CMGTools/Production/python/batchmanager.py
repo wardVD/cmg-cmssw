@@ -72,7 +72,7 @@ class BatchManager:
                     print "remote directory must start with /pnfs/psi.ch to send to the tier3 at PSI"
                     print self.remoteOutputDir_, "not valid"
                     sys.exit(1)
-            if "oeaw.ac.at" in self.remoteOutputDir_: # T2 @ VIENNA:
+            elif "oeaw.ac.at" in self.remoteOutputDir_: # T2 @ VIENNA:
                 # overwriting protection to be improved
                 if self.remoteOutputDir_.startswith("/dpm/oeaw.ac.at"):
                     ld_lib_path = os.environ.get('LD_LIBRARY_PATH')
