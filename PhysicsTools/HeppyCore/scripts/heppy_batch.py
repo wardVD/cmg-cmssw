@@ -45,9 +45,70 @@ exit $?
    return script
 
 
-def batchScriptCERN( index, remoteDir=''):
-   '''prepare the LSF version of the batch script, to run on LSF'''
-   script = """#!/bin/bash
+def batchScriptCERN( index, jobDir, remoteDir):
+  '''prepare the LSF version of the batch script, to run on LSF'''
+  print index, jobDir, remoteDir
+  if remoteDir.startswith("/dpm/oeaw.ac.at"):
+    script="""#!/bin/bash
+#BSUB -q 8nm
+echo 'environment:'
+echo
+env
+# ulimit -v 3000000 # NO
+echo 'copying job dir to worker'
+cd $CMSSW_BASE/src
+eval `scramv1 ru -sh`
+# cd $LS_SUBCWD
+# eval `scramv1 ru -sh`
+cd -
+cp -rf $LS_SUBCWD .
+ls
+cd `find . -type d | grep /`
+echo 'running'
+python $CMSSW_BASE/src/PhysicsTools/HeppyCore/python/framework/looper.py pycfg.py config.pck
+looperExitStat=$?
+echo 'sending root files to remote dir'
+copyExitStat=0
+if [ $looperExitStatus -ne 0 ]; then
+   echo "Looper failed. Don't attempt to copy corrupted file remotely"
+   exit 1 
+else
+   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib64/dcap/ # Fabio's workaround to fix gfal-tools
+   nEvents=`grep 'All Events' Loop/skimAnalyzerCount/SkimReport.txt | sed 's/.* All Events  *\([0-9][0-9]*\).*/\\1/'`
+   echo "Processed ${{nEvents}} according to Loop/log.txt"
+   for f in Loop/tree*/*.root
+   do
+      ff=`basename $f | cut -d . -f 1`
+      d=`echo $f | cut -d / -f 2`
+      #gfal-mkdir {srm}
+      echo "Trying 10x: lcg-cp -v file://`pwd`/Loop/$d/$ff.root {srm}/${{ff}}_Chunk{idx}_nEvents${{nEvents}}.root"
+      icnt=0
+      fileCopyExitStatus=1
+      while [ $icnt -lt 10 ]
+      do
+        lcg-cp -v file://`pwd`/Loop/$d/$ff.root {srm}/${{ff}}_Chunk{idx}_nEvents${{nEvents}}.root
+        if [ $? -eq 0 ]
+        then
+          fileCopyExitStatus=0
+          break
+        else
+          let icnt+=1
+          sleep 300
+        fi
+      done
+      rm Loop/$d/$ff.root
+      if [ $fileCopyExitStatus -ne 0 ]; then
+         echo "ERROR: remote copy failed for file $ff"
+         copyExitStat=$fileCopyExitStatus
+      else
+         echo "remote copy succeeded"
+      fi
+   done
+fi
+exit $copyExitStat
+""".format(idx=index, srm='srm://hephyse.oeaw.ac.at'+remoteDir+jobDir[jobDir.rfind("/"):max(0,jobDir.find("_Chunk"))])
+  else:
+     script = """#!/bin/bash
 #BSUB -q 8nm
 echo 'environment:'
 echo
@@ -68,7 +129,7 @@ echo
 echo 'sending the job directory back'
 cp -r Loop/* $LS_SUBCWD 
 """ 
-   return script
+  return script
 
 
 def batchScriptPSI( index, jobDir, remoteDir=''):
@@ -190,7 +251,7 @@ class MyBatchManager( BatchManager ):
        storeDir = self.remoteOutputDir_.replace('/castor/cern.ch/cms','')
        mode = self.RunningMode(options.batch)
        if mode == 'LXPLUS':
-           scriptFile.write( batchScriptCERN( storeDir, value) ) # watch out arguments are swapped (although not used)
+           scriptFile.write( batchScriptCERN( value, jobDir, storeDir) ) 
        elif mode == 'PSI':
            scriptFile.write( batchScriptPSI ( value, jobDir, storeDir ) ) # storeDir not implemented at the moment
        elif mode == 'LOCAL':
