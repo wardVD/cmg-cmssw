@@ -1,4 +1,5 @@
 from PhysicsTools.Heppy.analyzers.core.AutoFillTreeProducer  import * 
+from CMGTools.TTHAnalysis.analyzers.ntupleTypes import *
 
 susyCore_globalVariables = [
             NTupleVariable("rho",  lambda ev: ev.rho, float, help="kt6PFJets rho"),
