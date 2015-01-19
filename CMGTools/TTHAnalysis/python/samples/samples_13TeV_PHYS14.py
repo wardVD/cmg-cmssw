@@ -176,6 +176,9 @@ SMS_T1qqqq_2J_mGl1400_mLSP100 = kreator.makeMCComponent("SMS_T1qqqq_2J_mGl1400_m
 SMS_T1qqqq_2J_mGl1000_mLSP800 = kreator.makeMCComponent("SMS_T1qqqq_2J_mGl1000_mLSP800", "/SMS-T1qqqq_2J_mGl-1000_mLSP-800_Tune4C_13TeV-madgraph-tauola/Phys14DR-PU20bx25_tsg_PHYS14_25_V1-v1/MINIAODSIM", "CMS", ".*root",0.325388)
 SMS_T1bbbb_2J_mGl1500_mLSP100 = kreator.makeMCComponent("SMS_T1bbbb_2J_mGl1500_mLSP100", "/SMS-T1bbbb_2J_mGl-1500_mLSP-100_Tune4C_13TeV-madgraph-tauola/Phys14DR-PU20bx25_tsg_PHYS14_25_V1-v1/MINIAODSIM", "CMS", ".*root",0.0141903)
 SMS_T1bbbb_2J_mGl1000_mLSP900 = kreator.makeMCComponent("SMS_T1bbbb_2J_mGl1000_mLSP900", "/SMS-T1bbbb_2J_mGl-1000_mLSP-900_Tune4C_13TeV-madgraph-tauola/Phys14DR-PU20bx25_tsg_PHYS14_25_V1-v1/MINIAODSIM", "CMS", ".*root",0.325388)
+SMS_T5qqqqWW_Gl1500_Chi800_LSP100 =  kreator.makeMCComponentFromEOS("SMS_T5qqqqWW_Gl1500_Chi800_LSP100","/SMS_T5qqqqWW_Gl1500_Chi800_LSP100/","/store/cmst3/group/susy/alobanov/MC/PHYS14/PU20_25ns/%s", ".*root",0.0141903) 
+SMS_T5qqqqWW_Gl1200_Chi1000_LSP800 = kreator.makeMCComponentFromEOS("SMS_T5qqqqWW_Gl1200_Chi1000_LSP800","/SMS_T5qqqqWW_Gl1200_Chi1000_LSP800/","/store/cmst3/group/susy/alobanov/MC/PHYS14/PU20_25ns/%s",".*root",0.0856418)
+
 SusySignalSamples = [
 SMS_T2tt_2J_mStop850_mLSP100, 
 SMS_T2tt_2J_mStop650_mLSP325, 
@@ -191,6 +194,8 @@ SMS_T1qqqq_2J_mGl1400_mLSP100,
 SMS_T1qqqq_2J_mGl1000_mLSP800, 
 SMS_T1bbbb_2J_mGl1500_mLSP100, 
 SMS_T1bbbb_2J_mGl1000_mLSP900,
+SMS_T5qqqqWW_Gl1500_Chi800_LSP100, 
+SMS_T5qqqqWW_Gl1200_Chi1000_LSP800,
 ]
 
 mcSamplesPHYS14_PU20bx25 = QCDHT + [WJetsToLNu] + WJetsToLNuHT +  [DYJetsToLL_M50, DYJetsMuMuM50_PtZ180] + DYJetsM50HT + GJetsHT + ZJetsToNuNuHT + SingleTop + [ TTJets, TTWJets, TTZJets, TTH, WZJetsTo3LNu, ZZTo4L, GGHZZ4L] + SusySignalSamples
