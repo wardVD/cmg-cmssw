@@ -1,4 +1,5 @@
-import CMGTools.RootTools.fwlite.Config as cfg
+import PhysicsTools.HeppyCore.framework.config as cfg
+
 import os
 from Workspace.HEPHYPythonTools.helpers import getFileList
 from Workspace.HEPHYPythonTools.xsec import xsec
@@ -18,7 +19,7 @@ def createComponentFromDirectory(name, dbsName, dir, xSec, histname='histo',  ma
   component = cfg.MCComponent(
       dataset=dbsName,
       name = name,
-      files = ['file:'+f for f in getFileList(dir, minAgeDPM=0, histname=histname, maxN=maxN)],
+      files = getFileList(dir, minAgeDPM=0, histname=histname, maxN=maxN),
       xSection = xSec,
       nGenEvents = 1,
       triggers = [],
@@ -28,14 +29,14 @@ def createComponentFromDirectory(name, dbsName, dir, xSec, histname='histo',  ma
 
 allComps=[]
 
-debugSamples = createComponentFromDirectory(\
+debugSample = createComponentFromDirectory(\
   name = 'debugSamples',
   dbsName='',
   xSec=0.,
   dir='/afs/hephy.at/scratch/s/schoefbeck/CMS/CMSSW_7_2_3/src/Workspace/HEPHYPythonTools/crab/pickEvents/crab_0_150122_110053/res/', 
   histname="pickevents"
   ) 
-allComps.append(debugSamples)
+allComps.append(debugSample)
 
 from CMGTools.TTHAnalysis.setup.Efficiencies import *
 dataDir = os.environ['CMSSW_BASE']+"/src/CMGTools/TTHAnalysis/data"

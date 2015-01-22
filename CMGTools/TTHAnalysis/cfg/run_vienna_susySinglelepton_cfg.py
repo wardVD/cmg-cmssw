@@ -83,16 +83,11 @@ treeProducer = cfg.Analyzer(
 #-------- SAMPLES AND TRIGGERS -----------
 
 from CMGTools.TTHAnalysis.samples.samples_13TeV_PHYS14 import *
+from CMGTools.TTHAnalysis.samples.samples_13TeV_private_heplx import *
 #selectedComponents = [ SingleMu, DoubleElectron, TTHToWW_PUS14, DYJetsToLL_M50_PU20bx25, TTJets_PUS14 ]
-TTJets.splitFactor = 1000
-#selectedComponents = [TTJets]
-
-#selectedComponents = [QCD_HT_1000ToInf, QCD_HT_250To500, QCD_HT_500To1000, SMS_T1tttt_2J_mGl1200_mLSP800, SMS_T1tttt_2J_mGl1500_mLSP100, SMS_T2tt_2J_mStop425_mLSP325, SMS_T2tt_2J_mStop500_mLSP325, SMS_T2tt_2J_mStop650_mLSP325, SMS_T2tt_2J_mStop850_mLSP100, TBarToLeptons_sch, TBarToLeptons_tch, TBar_tWch, TTH, TTWJets, TTZJets, TToLeptons_sch, TToLeptons_tch, T_tWch]
-#selectedComponents =WJetsToLNuHT +  [WJetsToLNu]  
-#selectedComponents = DYJetsM50HT
-selectedComponents = [SMS_T5qqqqWW_Gl1500_Chi800_LSP100,  SMS_T5qqqqWW_Gl1200_Chi1000_LSP800]
-
-#selectedComponents = MySamples 
+#selectedComponents =  WJetsToLNuHT #[WJetsToLNu] # + WJetsToLNuHT  
+selectedComponents = [TTJets]
+TTJets.splitFactor=1000
 #-------- SEQUENCE
 
 sequence = cfg.Sequence(susyCoreSequence+[
@@ -100,6 +95,7 @@ sequence = cfg.Sequence(susyCoreSequence+[
 #    ttHReclusterJets,
     treeProducer,
     ])
+
 
 #-------- HOW TO RUN
 test = 0
