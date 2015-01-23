@@ -85,9 +85,10 @@ treeProducer = cfg.Analyzer(
 from CMGTools.TTHAnalysis.samples.samples_13TeV_PHYS14 import *
 from CMGTools.TTHAnalysis.samples.samples_13TeV_private_heplx import *
 #selectedComponents = [ SingleMu, DoubleElectron, TTHToWW_PUS14, DYJetsToLL_M50_PU20bx25, TTJets_PUS14 ]
-#selectedComponents =  WJetsToLNuHT #[WJetsToLNu] # + WJetsToLNuHT  
-selectedComponents = [TTJets]
-TTJets.splitFactor=1000
+#selectedComponents =  WJetsToLNuHT #[WJetsToLNu] # + WJetsToLNuHT 
+#selectedComponents = [TTJets]
+#TTJets.splitFactor=1000
+selectedComponents = QCDHT + [WJetsToLNu]  + DYJetsM50HT + SingleTop + [ TTWJets, TTZJets, TTH] + SusySignalSamples
 #-------- SEQUENCE
 
 sequence = cfg.Sequence(susyCoreSequence+[
