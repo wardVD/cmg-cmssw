@@ -75,7 +75,7 @@ class BatchManager:
                     ld_lib_path = os.environ.get('LD_LIBRARY_PATH')
                     if ld_lib_path != "None":
                         os.environ['LD_LIBRARY_PATH'] = "/usr/lib64/:"+ld_lib_path  # to solve gfal conflict with CMSSW
-                    print "Creating gfal-mkdir srm://hephyse.oeaw.ac.at/"+self.remoteOutputDir_#FIXME->remove
+                    print "Creating gfal-mkdir srm://hephyse.oeaw.ac.at/"+self.remoteOutputDir_
                     os.system("gfal-mkdir srm://hephyse.oeaw.ac.at/"+self.remoteOutputDir_)
                     outputDir = self.options_.outputDir
                     if outputDir==None:
@@ -84,7 +84,7 @@ class BatchManager:
                     else:
                       outputDir=outputDir.rstrip('/').split('/')[-1]
                     self.remoteOutputDir_+="/"+outputDir
-                    print "Creating gfal-mkdir srm://hephyse.oeaw.ac.at/"+self.remoteOutputDir_#FIXME->remove
+                    print "Creating gfal-mkdir srm://hephyse.oeaw.ac.at/"+self.remoteOutputDir_
                     os.system("gfal-mkdir srm://hephyse.oeaw.ac.at/"+self.remoteOutputDir_)
                     if ld_lib_path != "None":
                         os.environ['LD_LIBRARY_PATH'] = ld_lib_path  # back to original to avoid conflicts

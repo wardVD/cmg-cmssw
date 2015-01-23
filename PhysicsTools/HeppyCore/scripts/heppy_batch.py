@@ -105,6 +105,8 @@ else
       fi
    done
 fi
+echo 'sending the job directory back'
+cp -r Loop/* $LS_SUBCWD 
 exit $copyExitStat
 """.format(idx=index, srm='srm://hephyse.oeaw.ac.at'+remoteDir+jobDir[jobDir.rfind("/"):max(0,jobDir.find("_Chunk"))])
   else:
