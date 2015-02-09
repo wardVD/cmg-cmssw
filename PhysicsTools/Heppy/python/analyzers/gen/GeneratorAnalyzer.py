@@ -1,7 +1,7 @@
 from PhysicsTools.Heppy.analyzers.core.Analyzer import Analyzer
 from PhysicsTools.Heppy.analyzers.core.AutoHandle import AutoHandle
 from PhysicsTools.Heppy.physicsutils.genutils import isNotFromHadronicShower, realGenMothers, realGenDaughters
-
+from math import cos, sin
 def interestingPdgId(id,includeLeptons=False):        
     id = abs(id)
     return id in [6,7,8,17,18] or (includeLeptons and 11 <= id and id < 16) or (22 <= id and id < 40) or id > 1000000
@@ -59,6 +59,18 @@ class GeneratorAnalyzer( Analyzer ):
 
     def beginLoop(self,setup):
         super(GeneratorAnalyzer,self).beginLoop(setup)
+
+    def addGenTauSusyExtra(self, genTau) :
+      MEx = sum([genTau.daughter(i).px() for i in range( genTau.numberOfDaughters())])
+      MEy = sum([genTau.daughter(i).py() for i in range( genTau.numberOfDaughters())])
+      genTau.nNuE=sum([1 for i in range( genTau.numberOfDaughters() ) if abs(genTau.daughter(i).pdgId())==12])
+      genTau.nNuMu=sum([1 for i in range( genTau.numberOfDaughters() ) if abs(genTau.daughter(i).pdgId())==14])
+      genTau.nNuTau=sum([1 for i in range( genTau.numberOfDaughters() ) if abs(genTau.daughter(i).pdgId())==16])
+      genTau.MEx = MEx
+      genTau.MEy = MEy
+      genTau.MEpar =  MEx*cos(genTau.phi())+MEy*sin(genTau.phi()) 
+      genTau.MEperp = MEy*cos(genTau.phi())-MEx*sin(genTau.phi())
+      return True 
 
     def makeMCInfo(self, event):
         verbose = getattr(self.cfg_ana, 'verbose', False)
@@ -200,6 +212,7 @@ class GeneratorAnalyzer( Analyzer ):
                         event.genleps.append(p)
                 elif id == 15:
                     if self.allGenTaus or not any([abs(d.pdgId()) in {11,13} for d in realGenDaughters(p)]):
+                        self.addGenTauSusyExtra(p)
                         event.gentaus.append(p)
                 elif id == 6:
                     event.gentopquarks.append(p)

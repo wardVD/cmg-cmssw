@@ -60,18 +60,6 @@ class ttHGenLevelAnalyzer( Analyzer ):
     def beginLoop(self, setup):
         super(ttHGenLevelAnalyzer,self).beginLoop( setup )
 
-    def addGenTauSusyData(self, genTau) :
-      MEx = sum(genTau.daughter(i).px() for i in range( genTau.numberOfDaughters()))
-      MEy = sum(genTau.daughter(i).py() for i in range( genTau.numberOfDaughters()))
-      genTau.nNuE=sum([1 for i in range( genTau.numberOfDaughters() ) if abs(genTau.daughter(i).pdgId())==12]))
-      genTau.nNuMu=sum([1 for i in range( genTau.numberOfDaughters() ) if abs(genTau.daughter(i).pdgId())==14]))
-      genTau.nNuTau=sum([1 for i in range( genTau.numberOfDaughters() ) if abs(genTau.daughter(i).pdgId())==16]))
-      genTau.MEx = MEx
-      genTau.MEy = MEy
-      genTau.MEpar =  MEx*cos(genTau.phi())+MEy*sin(genTau.phi()) 
-      genTau.MEperp = MEy*cos(genTau.phi())-MEx*sin(genTau.phi())
-      return True 
-
     def fillGenLeptons(self, event, particle, isTau=False, sourceId=25):
         """Get the gen level light leptons (prompt and/or from tau decays)"""
 
@@ -88,7 +76,6 @@ class ttHGenLevelAnalyzer( Analyzer ):
                 else:     event.genleps.append(dau)
             elif id == 15:
                 if moid in [22,23,24]:
-                    addGenTauSusyData(dau)
                     event.gentaus.append(dau)
                 self.fillGenLeptons(event, dau, True, sourceId)
             elif id in [22,23,24]:
@@ -266,7 +253,7 @@ class ttHGenLevelAnalyzer( Analyzer ):
 
     def process(self, event):
         self.readCollections( event.input )
-
+        print "Hello?"
         ## creating a "sub-event" for this analyzer
         #myEvent = Event(event.iEv)
         #setattr(event, self.name, myEvent)
@@ -278,7 +265,8 @@ class ttHGenLevelAnalyzer( Analyzer ):
 
         # do MC level analysis
         self.makeMCInfo(event)
-
+        for p in event.gentaus:
+          print p, p.MEx
         self.addGenBinning(event)
 
         # if MC and filtering on the Higgs decay mode, 

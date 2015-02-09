@@ -39,6 +39,7 @@ metAna.recalibrate = False #should be false in susycore, already
 
 # Event Analyzer for susy multi-lepton (at the moment, it's the TTH one)
 
+genAna.allGenTaus = True
 
 isoTrackAna.setOff=False
 
@@ -63,16 +64,16 @@ susyCoreSequence.insert(susyCoreSequence.index(ttHCoreEventAna),
                         ttHHeavyFlavourHadronAna)
 
 
-candAnaMET = cfg.Analyzer(
-    CandidateAnalyzerMET, name='candidateAnalyzerMET',
-    setOff=False,
-    candidates='packedPFCandidates',
-    candidatesTypes='std::vector<pat::PackedCandidate>',
-    )
-
-susyCoreSequence.insert(susyCoreSequence.index(ttHCoreEventAna),
-                        candAnaMET)
-
+#candAnaMET = cfg.Analyzer(
+#    CandidateAnalyzerMET, name='candidateAnalyzerMET',
+#    setOff=False,
+#    candidates='packedPFCandidates',
+#    candidatesTypes='std::vector<pat::PackedCandidate>',
+#    )
+#
+#susyCoreSequence.insert(susyCoreSequence.index(ttHCoreEventAna),
+#                        candAnaMET)
+#
 ### Single lepton + ST skim
 #from CMGTools.TTHAnalysis.analyzers.ttHSTSkimmer import ttHSTSkimmer
 #ttHSTSkimmer = cfg.Analyzer(
@@ -100,8 +101,6 @@ treeProducer = cfg.Analyzer(
      collections = susySingleLepton_collections,
 )
 
-
-
 #-------- SAMPLES AND TRIGGERS -----------
 
 from CMGTools.TTHAnalysis.samples.samples_13TeV_PHYS14 import *
@@ -123,7 +122,7 @@ sequence = cfg.Sequence(susyCoreSequence+[
 
 
 #-------- HOW TO RUN
-test = 0
+test = 1
 if test==1:
     # test a single component, using a single thread.
     comp = TTJets
