@@ -133,11 +133,13 @@ metTypeSusy = NTupleObjectType("metSusy", baseObjectTypes = [ metType ], variabl
 ##------------------------------------------  
 
 genTauWithLinksExtrasType = NTupleObjectType("genTauWithLinksType", baseObjectTypes = [ genParticleWithAncestryType ], mcOnly=True, variables = [
-    NTupleVariable("MEx", lambda x : sum(x.daughter(i).daughter(j).px() for i in range(x.numberOfDaughters()) for j in range(x.daughter(i).numberOfDaughters()) if abs(x.daughter(i).pdgId())==15 and abs(x.daughter(i).daughter(j).pdgId()) in [12, 14, 16]), float, help="neutrino x momentum from gen-tau"),
-    NTupleVariable("MEy", lambda x : sum(x.daughter(i).daughter(j).py() for i in range(x.numberOfDaughters()) for j in range(x.daughter(i).numberOfDaughters()) if abs(x.daughter(i).pdgId())==15 and abs(x.daughter(i).daughter(j).pdgId()) in [12, 14, 16]), float, help="neutrino y momentum from gen-tau"),
-    NTupleVariable("nNuE", lambda x : sum(1 for i in range(x.numberOfDaughters()) for j in range(x.daughter(i).numberOfDaughters()) if abs(x.daughter(i).pdgId())==15 and abs(x.daughter(i).daughter(j).pdgId()) == 12), float, help="nuE multiplicity in tau decay"),
-    NTupleVariable("nNuMu", lambda x : sum(1 for i in range(x.numberOfDaughters()) for j in range(x.daughter(i).numberOfDaughters()) if abs(x.daughter(i).pdgId())==15 and abs(x.daughter(i).daughter(j).pdgId()) == 14), float, help="nuMu multiplicity in tau decay"),
-    NTupleVariable("nNuTau", lambda x : sum(1 for i in range(x.numberOfDaughters()) for j in range(x.daughter(i).numberOfDaughters()) if abs(x.daughter(i).pdgId())==15 and abs(x.daughter(i).daughter(j).pdgId()) == 16), float, help="nuTau multiplicity in tau decay"),
+    NTupleVariable("MEx", lambda x : x.MEx, float, help="neutrino x momentum from gen-tau"),
+    NTupleVariable("MEy", lambda x : x.MEy, float, help="neutrino y momentum from gen-tau"),
+    NTupleVariable("nNuE", lambda x : x.nNuE, float, help="nuE multiplicity in tau decay"),
+    NTupleVariable("nNuMu", lambda x : x.nNuMu, float, help="nuMu multiplicity in tau decay"),
+    NTupleVariable("nNuTau", lambda x : x.nNuTau, float, help="nuTau multiplicity in tau decay"),
+    NTupleVariable("MEpar", lambda x : x.MEpar, float, help="neutrino momentum from gen-tau, parallel to gen-tau"),
+    NTupleVariable("MEperp", lambda x : x.MEperp, float, help="neutrino momentum from gen-tau, perp. to gen-tau"),
 ])
 
 ##------------------------------------------  

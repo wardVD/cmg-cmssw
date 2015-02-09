@@ -3,7 +3,7 @@
 ## skim condition: >= 0 loose leptons, no pt cuts or id ##
 ##########################################################
 import PhysicsTools.HeppyCore.framework.config as cfg
-
+from PhysicsTools.Heppy.analyzers.examples.CandidateAnalyzerMET import CandidateAnalyzerMET 
 
 #Load all analyzers
 from CMGTools.TTHAnalysis.analyzers.susyCore_modules_cff import * 
@@ -27,9 +27,7 @@ ttHLepSkim.maxLeptons = 999
 
 # --- JET-LEPTON CLEANING ---
 jetAna.minLepPt = 10 
-
 jetAna.mGT = "PHYS14_25_V2_LowPtHenningFix"
-
 jetAna.smearJets = False #should be false in susycore, already
 jetAna.recalibrateJets = True #should be true in susycore, already
 metAna.recalibrate = False #should be false in susycore, already
@@ -63,6 +61,17 @@ susyCoreSequence.insert(susyCoreSequence.index(ttHCoreEventAna),
                         ttHSVAna)
 susyCoreSequence.insert(susyCoreSequence.index(ttHCoreEventAna),
                         ttHHeavyFlavourHadronAna)
+
+
+candAnaMET = cfg.Analyzer(
+    CandidateAnalyzerMET, name='candidateAnalyzerMET',
+    setOff=False,
+    candidates='packedPFCandidates',
+    candidatesTypes='std::vector<pat::PackedCandidate>',
+    )
+
+susyCoreSequence.insert(susyCoreSequence.index(ttHCoreEventAna),
+                        candAnaMET)
 
 ### Single lepton + ST skim
 #from CMGTools.TTHAnalysis.analyzers.ttHSTSkimmer import ttHSTSkimmer
