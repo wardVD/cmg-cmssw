@@ -105,7 +105,7 @@ treeProducer = cfg.Analyzer(
 
 from CMGTools.TTHAnalysis.samples.samples_13TeV_PHYS14 import *
 selectedComponents =  [TTJets]
-#TTJets.splitFactor=1000 
+TTJets.splitFactor=1000 
 
 #selectedComponents =  WJetsToLNuHT #[WJetsToLNu] # + WJetsToLNuHT 
 #selectedComponents = QCDHT + [WJetsToLNu]  + DYJetsM50HT + SingleTop + [ TTWJets, TTZJets, TTH] + SusySignalSamples
