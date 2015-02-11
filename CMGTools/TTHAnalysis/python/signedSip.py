@@ -1,6 +1,6 @@
 import ROOT
 
-#ROOT.gSystem.Load("libCMGToolsTTHAnalysis")
+ROOT.gSystem.Load("libCMGToolsTTHAnalysis")
 SignedImpactParameterComputer = ROOT.SignedImpactParameter()
 
 def signedSip3D(lepton, vertex=None):

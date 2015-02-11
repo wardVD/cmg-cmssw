@@ -61,8 +61,8 @@ class GeneratorAnalyzer( Analyzer ):
         super(GeneratorAnalyzer,self).beginLoop(setup)
 
     def addGenTauSusyExtra(self, genTau) :
-      MEx = sum([genTau.daughter(i).px() for i in range( genTau.numberOfDaughters())])
-      MEy = sum([genTau.daughter(i).py() for i in range( genTau.numberOfDaughters())])
+      MEx = sum([genTau.daughter(i).px() for i in range( genTau.numberOfDaughters()) if abs(genTau.daughter(i).pdgId()) in [12,14,16] ])
+      MEy = sum([genTau.daughter(i).py() for i in range( genTau.numberOfDaughters()) if abs(genTau.daughter(i).pdgId()) in [12,14,16] ])
       genTau.nNuE=sum([1 for i in range( genTau.numberOfDaughters() ) if abs(genTau.daughter(i).pdgId())==12])
       genTau.nNuMu=sum([1 for i in range( genTau.numberOfDaughters() ) if abs(genTau.daughter(i).pdgId())==14])
       genTau.nNuTau=sum([1 for i in range( genTau.numberOfDaughters() ) if abs(genTau.daughter(i).pdgId())==16])
