@@ -3,14 +3,14 @@
 ## skim condition: >= 0 loose leptons, no pt cuts or id ##
 ##########################################################
 import PhysicsTools.HeppyCore.framework.config as cfg
-#from PhysicsTools.Heppy.analyzers.examples.CandidateAnalyzerMET import CandidateAnalyzerMET 
 
 #Load all analyzers
 from CMGTools.TTHAnalysis.analyzers.susyCore_modules_cff import * 
 
 lepAna.loose_muon_pt  = 5
 lepAna.loose_muon_relIso = 0.5
-lepAna.mu_isoCorr = "deltaBeta" 
+#lepAna.mu_isoCorr = "deltaBeta" 
+lepAna.mu_isoCorr = "rhoArea" 
 lepAna.loose_electron_pt  = 7
 lepAna.loose_electron_relIso = 0.5
 lepAna.ele_isoCorr = "rhoArea" 
@@ -18,6 +18,11 @@ lepAna.ele_tightId = "Cuts_2012"
 
 
 # Redefine what I need
+lepAna.doMiniIsolation = True
+lepAna.packedCandidates = 'packedPFCandidates'
+lepAna.miniIsolationPUCorr = 'rhoArea'
+lepAna.miniIsolationVetoLeptons = None
+
 
 # --- LEPTON SKIMMING ---
 ttHLepSkim.minLeptons = 0
@@ -28,6 +33,7 @@ ttHLepSkim.maxLeptons = 999
 # --- JET-LEPTON CLEANING ---
 jetAna.minLepPt = 10 
 jetAna.mGT = "PHYS14_25_V2_LowPtHenningFix"
+jetAna.doQG = True
 jetAna.smearJets = False #should be false in susycore, already
 jetAna.recalibrateJets = True #should be true in susycore, already
 metAna.recalibrate = False #should be false in susycore, already
@@ -95,6 +101,7 @@ treeProducer = cfg.Analyzer(
      AutoFillTreeProducer, name='treeProducerSusySingleLepton',
      vectorTree = True,
      saveTLorentzVectors = False,  # can set to True to get also the TLorentzVectors, but trees will be bigger
+     defaultFloatType = 'F', # use Float_t for floating point
      PDFWeights = PDFWeights,
      globalVariables = susySingleLepton_globalVariables,
      globalObjects = susySingleLepton_globalObjects,

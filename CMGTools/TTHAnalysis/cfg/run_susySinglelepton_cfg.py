@@ -1,5 +1,5 @@
 ##########################################################
-##       CONFIGURATION FOR SUSY SingleLep TREES       ##
+##       CONFIGURATION FOR SUSY SingleLep TREES         ##
 ## skim condition: >= 1 loose leptons, no pt cuts or id ##
 ##########################################################
 import PhysicsTools.HeppyCore.framework.config as cfg
