@@ -90,11 +90,11 @@ pileUpAna = cfg.Analyzer(
 genAna = cfg.Analyzer(
     GeneratorAnalyzer, name="GeneratorAnalyzer",
     # BSM particles that can appear with status <= 2 and should be kept
-    stableBSMParticleIds = { 1000022 },
+    stableBSMParticleIds = [ 1000022 ],
     # Particles of which we want to save the pre-FSR momentum (a la status 3).
     # Note that for quarks and gluons the post-FSR doesn't make sense,
     # so those should always be in the list
-    savePreFSRParticleIds = { 1,2,3,4,5, 11,12,13,14,15,16, 21 },
+    savePreFSRParticleIds = [ 1,2,3,4,5, 11,12,13,14,15,16, 21 ],
     # Make also the list of all genParticles, for other analyzers to handle
     makeAllGenParticles = True,
     # Make also the splitted lists
@@ -210,12 +210,15 @@ tauAna = cfg.Analyzer(
     TauAnalyzer, name="tauAnalyzer",
     ptMin = 20,
     etaMax = 9999,
-    dxyMax = 0.5,
-    dzMax = 1.0,
+    dxyMax = 1000.,
+    dzMax = 0.2,
     vetoLeptons = True,
     leptonVetoDR = 0.4,
-    vetoLeptonsPOG = False,
+    decayModeID = "decayModeFindingNewDMs", # ignored if not set or ""
     tauID = "byLooseCombinedIsolationDeltaBetaCorr3Hits",
+    vetoLeptonsPOG = False, # If True, the following two IDs are required
+    tauAntiMuonID = "againstMuonLoose3",
+    tauAntiElectronID = "againstElectronLooseMVA5",
     tauLooseID = "decayModeFinding",
 )
 
@@ -260,11 +263,12 @@ jetAna = cfg.Analyzer(
     relaxJetId = False,  
     doPuId = False, # Not commissioned in 7.0.X
     recalibrateJets = "MC", # True, False, 'MC', 'Data'
-    mGT     = "PHYS14_25_V2",
+    mcGT     = "PHYS14_25_V2",
     jecPath = "%s/src/CMGTools/RootTools/data/jec/" % os.environ['CMSSW_BASE'],
     shiftJEC = 0, # set to +1 or -1 to get +/-1 sigma shifts
     smearJets = False,
     shiftJER = 0, # set to +1 or -1 to get +/-1 sigma shifts  
+    cleanJetsFromFirstPhoton = False,
     cleanJetsFromTaus = False,
     cleanJetsFromIsoTracks = False,
     doQG = False,
@@ -306,6 +310,7 @@ metAna = cfg.Analyzer(
     METAnalyzer, name="metAnalyzer",
     doTkMet = False,
     doMetNoMu = False,
+    doMetNoPhoton = False,
     recalibrate = False,
     candidates='packedPFCandidates',
     candidatesTypes='std::vector<pat::PackedCandidate>',
@@ -320,8 +325,9 @@ ttHCoreEventAna = cfg.Analyzer(
     )
 
 ## Jet-MET based Skim (generic, but requirements depend on the final state)
-#ttHJetMETSkim = cfg.Analyzer(
-#    'ttHJetMETSkimmer',
+# from CMGTools.TTHAnalysis.analyzers.ttHJetMETSkimmer import ttHJetMETSkimmer
+# ttHJetMETSkim = cfg.Analyzer(
+#    ttHJetMETSkimmer, name='ttHJetMETSkimmer',
 #    jets      = "cleanJets", # jet collection to use
 #    jetPtCuts = [],  # e.g. [60,40,30,20] to require at least four jets with pt > 60,40,30,20
 #    jetVetoPt =  0,  # if non-zero, veto additional jets with pt > veto beyond the ones in jetPtCuts

@@ -141,7 +141,11 @@ class JetAnalyzer( Analyzer ):
         ## Clean Jets from photons
         photons = []
         if hasattr(event, 'selectedPhotons'):
-            photons = [ g for g in event.selectedPhotons ]
+            if self.cfg_ana.cleanJetsFromFirstPhoton:
+                photons = event.selectedPhotons[:1]
+            else:
+                photons = [ g for g in event.selectedPhotons ] 
+
         event.gamma_cleanJetsAll = cleanNearestJetOnly(event.cleanJetsAll, photons, self.jetGammaDR)
         event.gamma_cleanJets    = [j for j in event.gamma_cleanJetsAll if abs(j.eta()) <  self.cfg_ana.jetEtaCentral ]
         event.gamma_cleanJetsFwd = [j for j in event.gamma_cleanJetsAll if abs(j.eta()) >= self.cfg_ana.jetEtaCentral ]
@@ -161,7 +165,16 @@ class JetAnalyzer( Analyzer ):
                 lep.jet = lep
             else:
                 lep.jet = jet
+        ## Associate jets to taus 
+        taus = getattr(event,'selectedTaus',[])
+        jtaupairs = matchObjectCollection( taus, allJets, self.jetLepDR**2)
 
+        for jet in allJets:
+            jet.taus = [l for l in jtaupairs if jtaupairs[l] == jet ]
+        for tau in taus:
+            tau.jet = jtaupairs[tau]
+
+        #MC stuff
         if self.cfg_comp.isMC:
             event.deltaMetFromJetSmearing = [0, 0]
             for j in event.cleanJetsAll:
@@ -356,6 +369,7 @@ setattr(JetAnalyzer,"defaultConfig", cfg.Analyzer(
     shiftJEC = 0, # set to +1 or -1 to get +/-1 sigma shifts
     smearJets = True,
     shiftJER = 0, # set to +1 or -1 to get +/-1 sigma shifts    
+    cleanJetsFromFirstPhoton = False,
     cleanJetsFromTaus = False,
     cleanJetsFromIsoTracks = False,
     jecPath = ""

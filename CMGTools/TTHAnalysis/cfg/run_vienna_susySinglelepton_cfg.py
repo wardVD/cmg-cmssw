@@ -3,7 +3,7 @@
 ## skim condition: >= 0 loose leptons, no pt cuts or id ##
 ##########################################################
 import PhysicsTools.HeppyCore.framework.config as cfg
-from PhysicsTools.Heppy.analyzers.examples.CandidateAnalyzerMET import CandidateAnalyzerMET 
+#from PhysicsTools.Heppy.analyzers.examples.CandidateAnalyzerMET import CandidateAnalyzerMET 
 
 #Load all analyzers
 from CMGTools.TTHAnalysis.analyzers.susyCore_modules_cff import * 
@@ -122,7 +122,7 @@ sequence = cfg.Sequence(susyCoreSequence+[
 
 
 #-------- HOW TO RUN
-test = 0
+test = 1
 if test==1:
     # test a single component, using a single thread.
     comp = TTJets

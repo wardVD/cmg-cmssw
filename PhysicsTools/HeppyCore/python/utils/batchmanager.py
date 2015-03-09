@@ -254,6 +254,7 @@ class BatchManager:
         
         "LXPLUS" : batch command is bsub, and logged on lxplus
         "PSI"    : batch command is qsub, and logged to t3uiXX
+        "IC"     : batch command is qsub, and logged to hep.ph.ic.ac.uk
         "LOCAL"  : batch command is nohup.
         In all other cases, a CmsBatchException is raised
         '''
@@ -262,6 +263,7 @@ class BatchManager:
         onLxplus = hostName.startswith('lxplus')
         onPSI    = hostName.startswith('t3ui'  )
         onPISA    = re.match('.*gridui.*',hostName) or  re.match('.*faiwn.*',hostName)
+        onIC = 'hep.ph.ic.ac.uk' in hostName
         batchCmd = batch.split()[0]
         
         if batchCmd == 'bsub':
@@ -275,12 +277,19 @@ class BatchManager:
                 print 'running on LSF lxplus: %s from %s' % (batchCmd, hostName)
                 return 'LXPLUS'
         elif batchCmd == "qsub":
-            if not onPSI:
-                err = 'Cannot run %s on %s' % (batchCmd, hostName)
-                raise ValueError( err )
+            #if not onPSI:
+            #    err = 'Cannot run %s on %s' % (batchCmd, hostName)
+            #    raise ValueError( err )
+
+            if onIC: 
+                print 'running on IC : %s from %s' % (batchCmd, hostName)
+                return 'IC'
+
             else:
-                print 'running on SGE : %s from %s' % (batchCmd, hostName)
-                return 'PSI'
+		if onPSI:
+                	print 'running on SGE : %s from %s' % (batchCmd, hostName)
+                	return 'PSI'
+
         elif batchCmd == 'nohup' or batchCmd == './batchScript.sh':
             print 'running locally : %s on %s' % (batchCmd, hostName)
             return 'LOCAL'
