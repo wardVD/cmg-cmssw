@@ -29,14 +29,14 @@ def createComponentFromDirectory(name, dbsName, dir, xSec, histname='histo',  ma
 
 allComps=[]
 
-debugSample = createComponentFromDirectory(\
-  name = 'debugSamples',
-  dbsName='',
-  xSec=0.,
-  dir='/afs/hephy.at/scratch/s/schoefbeck/CMS/CMSSW_7_2_3/src/Workspace/HEPHYPythonTools/crab/pickEvents/crab_0_150122_110053/res/', 
-  histname="pickevents"
-  ) 
-allComps.append(debugSample)
+#debugSample = createComponentFromDirectory(\
+#  name = 'debugSamples',
+#  dbsName='',
+#  xSec=0.,
+#  dir='/afs/hephy.at/scratch/s/schoefbeck/CMS/CMSSW_7_2_3/src/Workspace/HEPHYPythonTools/crab/pickEvents/crab_0_150122_110053/res/', 
+#  histname="pickevents"
+#  ) 
+#allComps.append(debugSample)
 
 from CMGTools.TTHAnalysis.setup.Efficiencies import *
 dataDir = os.environ['CMSSW_BASE']+"/src/CMGTools/TTHAnalysis/data"
