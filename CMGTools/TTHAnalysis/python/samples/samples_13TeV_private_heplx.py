@@ -50,3 +50,7 @@ for comp in allComps:
     comp.puFileData=dataDir+"/puProfile_Data12.root"
     comp.efficiency = eff2012
 
+
+
+
+T2DegStop_300_270 = createComponentFromDPM("T2DegStop_300_270","/T2DegStop2j_300_270_GENSIM/nrad-T2DegStop2j_300_270_MINIAOD-a279b5108ada7c3c0926210c2a95f22e/USER",'/dpm/oeaw.ac.at/home/cms/store/user/nrad/T2DegStop2j_300_270_GENSIM/T2DegStop2j_300_270_MINIAOD/a279b5108ada7c3c0926210c2a95f22e/',histname='T2Deg')

@@ -16,9 +16,6 @@ kreator = ComponentCreator()
 ## CENTRALLY PRODUCED MINIAODs V2 (from global DBS, in T2_CH_CAF)
 
 
-from CMGTools.TTHAnalysis.samples.samples_13TeV_private_heplx import createComponentFromDPM
-
-T2DegStop_test = createComponentFromDPM("T2DegStop_test","/T2DegStop2j_300_270_GENSIM/nrad-T2DegStop2j_300_270_MINIAOD-a279b5108ada7c3c0926210c2a95f22e/USER",'/dpm/oeaw.ac.at/home/cms/store/user/nrad/T2DegStop2j_300_270_GENSIM/T2DegStop2j_300_270_MINIAOD/a279b5108ada7c3c0926210c2a95f22e',histname='T2Deg')
 
 ##################  PU40 bx25ns (not default, so samples have a _PU40bx25 postfix) ################## 
 GGHZZ4L_PU40bx25 = kreator.makeMCComponent("GGHZZ4L_PU40bx25", "/GluGluToHToZZTo4L_M-125_13TeV-powheg-pythia6/Phys14DR-PU40bx25_PHYS14_25_V1-v1/MINIAODSIM", "CMS", ".*root", 43.92*2.76E-04)
