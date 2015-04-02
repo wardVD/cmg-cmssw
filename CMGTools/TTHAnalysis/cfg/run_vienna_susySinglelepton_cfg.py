@@ -53,9 +53,7 @@ metAna.recalibrate = False #should be false in susycore, already
 
 isoTrackAna.setOff=False
 
-
-
-m CMGTools.TTHAnalysis.analyzers.ttHLepEventAnalyzer import ttHLepEventAnalyzer
+from CMGTools.TTHAnalysis.analyzers.ttHLepEventAnalyzer import ttHLepEventAnalyzer
 ttHEventAna = cfg.Analyzer(
     ttHLepEventAnalyzer, name="ttHLepEventAnalyzer",
     minJets25 = 0,
