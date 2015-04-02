@@ -122,28 +122,32 @@ treeProducer = cfg.Analyzer(
 
 #-------- SAMPLES AND TRIGGERS -----------
 
-from CMGTools.TTHAnalysis.samples.samples_13TeV_PHYS14 import *
+#from CMGTools.TTHAnalysis.samples.samples_13TeV_PHYS14 import *
 #selectedComponents = [QCD_HT_100To250, QCD_HT_250To500, QCD_HT_500To1000, QCD_HT_1000ToInf,TTJets, TTWJets, TTZJets, TTH, SMS_T1tttt_2J_mGl1500_mLSP100, SMS_T1tttt_2J_mGl1200_mLSP800] + SingleTop + WJetsToLNuHT + DYJetsM50HT + T5ttttDeg + T1ttbbWW + T5qqqqWW
+#selectedComponents = [TTJets]
 
 
+from CMGTools.TTHAnalysis.samples.samples_13TeV_private_heplx import *
+selectedComponents = [DYJetsToLL_M50_PU20bx25]#, DYJetsToLLHT100to200_M50_PU20bx25, DYJetsToLLHT200to400_M50_PU20bx25, DYJetsToLLHT400to600_M50_PU20bx25, DYJetsToLLHT600toInf_M50_PU20bx25]
 
 #-------- SEQUENCE
 
 sequence = cfg.Sequence(susyCoreSequence+[
     ttHEventAna,
-    ttHSTSkimmer,
+#    ttHSTSkimmer,
     ttHReclusterJets,
     treeProducer,
     ])
 
 
 #-------- HOW TO RUN
-test = 2
+test = 1
 if test==1:
     # test a single component, using a single thread.
-    comp = TTJets
+    comp = selectedComponents[0]
 #    comp = SMS_T1tttt_2J_mGl1500_mLSP100
-    comp.files = comp.files[:1]
+    comp.files = comp.files[:10]
+    print "Files:",comp.files
     selectedComponents = [comp]
     comp.splitFactor = 1
 elif test==2:
