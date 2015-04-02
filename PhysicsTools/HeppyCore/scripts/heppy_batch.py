@@ -44,7 +44,6 @@ exit $?
 """
    return script
 
-
 def batchScriptCERN( index, jobDir, remoteDir):
   '''prepare the LSF version of the batch script, to run on LSF'''
   print index, jobDir, remoteDir
@@ -114,7 +113,7 @@ exit $copyExitStat
 #BSUB -q 8nm
 echo 'environment:'
 echo
-env
+env | sort
 # ulimit -v 3000000 # NO
 echo 'copying job dir to worker'
 cd $CMSSW_BASE/src
@@ -151,7 +150,7 @@ do
 echo $f
 ff=`basename $f | cut -d . -f 1`
 echo $ff
-gfal-mkdir {srm}
+gfal-mkdir -p {srm}
 echo "gfal-copy file:///`pwd`/Loop/treeProducerSusyFullHad/$file.root {srm}/${{ff}}_{idx}.root"
 gfal-copy file:///`pwd`/Loop/treeProducerSusyFullHad/$ff.root {srm}/${{ff}}_{idx}.root
 done

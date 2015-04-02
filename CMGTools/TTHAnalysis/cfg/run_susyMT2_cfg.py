@@ -5,7 +5,7 @@ import PhysicsTools.HeppyCore.framework.config as cfg
 from CMGTools.TTHAnalysis.analyzers.susyCore_modules_cff import *
 
 # Comment this line if you want the diagnostic folders produced along with the output root file
-cfg.Analyzer.nosubdir = True 
+cfg.Analyzer.nosubdir = True
 
 
 ##------------------------------------------
@@ -35,9 +35,11 @@ lepAna.notCleaningElectrons = True
 # JET (for event variables do apply the jetID and not PUID yet)
 jetAna.relaxJetId = False
 jetAna.doPuId = False
+jetAna.doQG = True
 jetAna.jetEta = 5.2
 jetAna.jetEtaCentral = 2.5
 jetAna.jetPt = 10.
+#jetAna.mcGT = "PHYS14_V4_MC" # jec corrections
 jetAna.recalibrateJets = True
 jetAna.jetLepDR = 0.4
 jetAna.smearJets = False
@@ -60,6 +62,7 @@ tauAna.tauAntiElectronID = "againstElectronLoose"
 # Photon
 photonAna.etaCentral = 2.5
 photonAna.gammaID = "PhotonCutBasedIDLoose_CSA14"
+photonAna.do_randomCone = True
 
 # Isolated Track
 isoTrackAna.setOff=False
@@ -69,6 +72,9 @@ metAna.recalibrate = False
 
 # store all taus by default
 genAna.allGenTaus = True
+
+# switch off the SV and MC matching
+#ttHSVAna.do_mc_match = False
 
 ##------------------------------------------ 
 ##  CONTROL VARIABLES
@@ -149,6 +155,9 @@ susyCoreSequence.insert(susyCoreSequence.index(skimAnalyzer),
 #susyCoreSequence.insert(susyCoreSequence.index(ttHLepSkim),
 #                        ttHZskim)
 
+#susyCoreSequence.insert(susyCoreSequence.index(ttHCoreEventAna),
+#                        ttHSVAna)
+
 sequence = cfg.Sequence(
     susyCoreSequence+[
     ttHMT2Control,
@@ -161,7 +170,11 @@ sequence = cfg.Sequence(
 #treeProducer.isCompressed = 0
 
 
+
+from PhysicsTools.HeppyCore.framework.heppy import getHeppyOption
+
 #-------- HOW TO RUN
+# choose 2 for full production
 test = 0
 if test==0:
     # ------------------------------------------------------------------------------------------- #
@@ -191,19 +204,42 @@ if test==0:
     comp.splitFactor = 10
 
 elif test==1:
+
     from CMGTools.TTHAnalysis.samples.samples_13TeV_PHYS14 import *
     comp=GJets_HT200to400
     comp.files = ['/afs/cern.ch/user/d/dalfonso/public/TESTfilesPHY14/gjets_ht200to400_miniaodsim_fix.root']
+
+#    comp=TTJets
+#    comp.files = ['/afs/cern.ch/user/d/dalfonso/public/TESTfilesPHY14/TTJets_miniAOD_fixPhoton_forSynch.root']
+
     selectedComponents = [comp]
-    comp.splitFactor = 10
+    comp.splitFactor = 1
+
 elif test==2:
     from CMGTools.TTHAnalysis.samples.samples_13TeV_PHYS14 import *
-    selectedComponents = [ SingleMu, DoubleElectron, TTHToWW_PUS14, DYJetsToLL_M50_PU20bx25, TTJets_PUS14 ]
+    # full production
+    selectedComponents = [ 
+TTJets, # TTJets
+ZJetsToNuNu_HT100to200, ZJetsToNuNu_HT200to400, ZJetsToNuNu_HT400to600, ZJetsToNuNu_HT600toInf, # ZJetsToNuNu_HT
+WJetsToLNu_HT100to200, WJetsToLNu_HT200to400, WJetsToLNu_HT400to600, WJetsToLNu_HT600toInf, # WJetsToLNu_HT
+GJets_HT100to200_fixPhoton, GJets_HT200to400_fixPhoton, GJets_HT400to600_fixPhoton, GJets_HT600toInf_fixPhoton, # GJets_HT
+QCD_HT_100To250_fixPhoton, QCD_HT_250To500_fixPhoton, QCD_HT_500To1000_fixPhoton, QCD_HT_1000ToInf_fixPhoton, QCD_HT_250To500_ext1_fixPhoton, QCD_HT_500To1000_ext1_fixPhoton,QCD_HT_1000ToInf_ext1_fixPhoton, # QCD_HT
+QCD_Pt170to300_fixPhoton, QCD_Pt300to470_fixPhoton, QCD_Pt470to600_fixPhoton, QCD_Pt600to800_fixPhoton, QCD_Pt800to1000_fixPhoton, QCD_Pt1000to1400_fixPhoton, QCD_Pt1400to1800_fixPhoton, QCD_Pt1800to2400_fixPhoton, QCD_Pt2400to3200_fixPhoton, QCD_Pt3200_fixPhoton, # QCD_Pt
+SMS_T2tt_2J_mStop850_mLSP100, SMS_T2tt_2J_mStop650_mLSP325, SMS_T2tt_2J_mStop500_mLSP325, SMS_T2tt_2J_mStop425_mLSP325, SMS_T2qq_2J_mStop600_mLSP550, SMS_T2qq_2J_mStop1200_mLSP100, SMS_T2bb_2J_mStop900_mLSP100, SMS_T2bb_2J_mStop600_mLSP580, SMS_T1tttt_2J_mGl1500_mLSP100, SMS_T1tttt_2J_mGl1200_mLSP800, SMS_T1qqqq_2J_mGl1400_mLSP100, SMS_T1qqqq_2J_mGl1000_mLSP800, SMS_T1bbbb_2J_mGl1500_mLSP100, SMS_T1bbbb_2J_mGl1000_mLSP900, # SMS
+DYJetsToLL_M50_HT100to200, DYJetsToLL_M50_HT200to400, DYJetsToLL_M50_HT400to600, DYJetsToLL_M50_HT600toInf # DYJetsToLL_M50_HT
+]
+
     # test all components (1 thread per component).
     for comp in selectedComponents:
-        comp.splitFactor = 251
+        comp.splitFactor = 600
         comp.files = comp.files[:]
-        #comp.files = comp.files[:1]
+        #comp.files = comp.files[:1]  
+        #comp.files = comp.files[57:58]  # to process only file [57]  
+        #comp.triggers = triggers_HT900 + triggers_HTMET # to apply trigger skimming
+
+
+
+# ------------------------------------------------------------------------------------------- #
 
 from PhysicsTools.HeppyCore.framework.services.tfile import TFileService 
 output_service = cfg.Service(
@@ -214,12 +250,16 @@ output_service = cfg.Service(
       option='recreate'
     )
 
-# the following is declared in case this cfg is used in input to the heppy.py script                                                                                                                   
+# the following is declared in case this cfg is used in input to the heppy.py script
 from PhysicsTools.HeppyCore.framework.eventsfwlite import Events
+from CMGTools.TTHAnalysis.tools.EOSEventsWithDownload import EOSEventsWithDownload
+event_class = EOSEventsWithDownload
+if getHeppyOption("nofetch"):
+    event_class = Events
 config = cfg.Config( components = selectedComponents,
                      sequence = sequence,
                      services = [output_service],
-                     events_class = Events)
-
+                     events_class = event_class)
+#                     events_class = Events)
 #printComps(config.components, True)
         
