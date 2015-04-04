@@ -50,6 +50,10 @@ jetAna.doQG = True
 jetAna.smearJets = False #should be false in susycore, already
 jetAna.recalibrateJets = True #should be true in susycore, already
 metAna.recalibrate = False #should be false in susycore, already
+metAna.otherMETs = [\
+  ("metTxy",('slimmedTxyMETs', 'std::vector<pat::MET>')),
+  ("metRaw",('slimmedRAWMETs', 'std::vector<pat::MET>')),
+  ]
 
 isoTrackAna.setOff=False
 
@@ -141,7 +145,7 @@ sequence = cfg.Sequence(susyCoreSequence+[
 
 
 #-------- HOW TO RUN
-test = 1
+test = 2
 if test==1:
     # test a single component, using a single thread.
     comp = selectedComponents[0]
