@@ -317,6 +317,8 @@ ttHHeavyFlavourHadronAna = cfg.Analyzer(
 
 metAna = cfg.Analyzer(
     METAnalyzer, name="metAnalyzer",
+    metCollection     = "slimmedMETs",
+    noPUMetCollection = "slimmedMETs",
     doTkMet = False,
     doMetNoMu = False,
     doMetNoPhoton = False,
