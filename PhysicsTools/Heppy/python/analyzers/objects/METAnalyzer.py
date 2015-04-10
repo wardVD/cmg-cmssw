@@ -26,9 +26,6 @@ class METAnalyzer( Analyzer ):
         self.handles['nopumet'] = AutoHandle( self.cfg_ana.noPUMetCollection, 'std::vector<pat::MET>' )
         self.handles['cmgCand'] = AutoHandle( self.cfg_ana.candidates, self.cfg_ana.candidatesTypes )
         self.handles['vertices'] =  AutoHandle( "offlineSlimmedPrimaryVertices", 'std::vector<reco::Vertex>', fallbackLabel="offlinePrimaryVertices" )
-        for m in self.cfg_ana.otherMETs:
-          self.handles[m[0]] = AutoHandle( *(m[1]) )
-          
 
     def beginLoop(self, setup):
         super(METAnalyzer,self).beginLoop(setup)
@@ -148,13 +145,6 @@ class METAnalyzer( Analyzer ):
         if self.cfg_ana.doMetNoPhoton and hasattr(event, 'selectedPhotons'):
             self.makeMETNoPhoton(event)
 
-    def makeOtherMETs(self, event):
-        for m in self.cfg_ana.otherMETs:
-          metProduct = self.handles[m[0]].product()
-          met = copy.deepcopy(event.met)
-          met.setP4(metProduct[0].p4())
-          setattr(event, m[0], met)  
-
     def process(self, event):
         self.readCollections( event.input)
         self.counters.counter('events').inc('all events')
@@ -164,9 +154,6 @@ class METAnalyzer( Analyzer ):
 
         if self.cfg_ana.doTkMet: 
             self.makeTkMETs(event);
-        if len(self.cfg_ana.otherMETs)>0:
-          self.makeOtherMETs(event) 
-
 
         return True
 
@@ -183,7 +170,6 @@ setattr(METAnalyzer,"defaultConfig", cfg.Analyzer(
     candidates='packedPFCandidates',
     candidatesTypes='std::vector<pat::PackedCandidate>',
     dzMax = 0.1,
-    otherMETs = [],
     collectionPostFix = "",
     )
 )
