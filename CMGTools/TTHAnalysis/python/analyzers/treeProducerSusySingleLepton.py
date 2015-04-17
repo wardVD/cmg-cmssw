@@ -13,6 +13,10 @@ susySingleLepton_globalVariables = susyCore_globalVariables + [
             NTupleVariable("nSoftBJetLoose25",  lambda ev: sum([(sv.mva>0.3 and (sv.jet == None or sv.jet.pt() < 25)) for sv in ev.ivf]) + len(ev.bjetsMedium), int, help="Exclusive sum of jets with pt > 25 passing CSV medium and SV from ivf with loose sv mva"),
             NTupleVariable("nSoftBJetMedium25", lambda ev: sum([(sv.mva>0.7 and (sv.jet == None or sv.jet.pt() < 25)) for sv in ev.ivf]) + len(ev.bjetsMedium), int, help="Exclusive sum of jets with pt > 25 passing CSV medium and SV from ivf with medium sv mva"),
             NTupleVariable("nSoftBJetTight25",  lambda ev: sum([(sv.mva>0.9 and (sv.jet == None or sv.jet.pt() < 25)) for sv in ev.ivf]) + len(ev.bjetsMedium), int, help="Exclusive sum of jets with pt > 25 passing CSV medium and SV from ivf with tight sv mva"),
+#            NTupleVariable("metTxy_pt", lambda ev : ev.metTxy.pt(), help="E_{T}^{miss} Txy corrected"),
+#            NTupleVariable("metTxy_phi", lambda ev : ev.metTxy.phi(), help="phi(E_{T}^{miss}) Txy corrected"),
+#            NTupleVariable("metRaw_pt", lambda ev : ev.metRaw.pt(), help="E_{T}^{miss} raw"),
+#            NTupleVariable("metRaw_phi", lambda ev : ev.metRaw.phi(), help="phi(E_{T}^{miss}) raw"),
             ##------------------------------------------------
 ]
 susySingleLepton_globalObjects = susyCore_globalObjects.copy()
