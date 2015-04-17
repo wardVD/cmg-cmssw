@@ -111,8 +111,10 @@ treeProducer = cfg.Analyzer(
 #-------- SAMPLES AND TRIGGERS -----------
 
 from CMGTools.TTHAnalysis.samples.samples_13TeV_PHYS14 import *
-selectedComponents =  [TTJets]
-TTJets.splitFactor=1000 
+#selectedComponents =  [TTJets]
+#TTJets.splitFactor=1000 
+from CMGTools.TTHAnalysis.samples.samples_13TeV_private_heplx import *
+selectedComponents = [T2DegStop_300_270]
 
 #selectedComponents =  WJetsToLNuHT #[WJetsToLNu] # + WJetsToLNuHT 
 #selectedComponents = QCDHT + [WJetsToLNu]  + DYJetsM50HT + SingleTop + [ TTWJets, TTZJets, TTH] + SusySignalSamples
@@ -132,7 +134,8 @@ sequence = cfg.Sequence(susyCoreSequence+[
 test = 1
 if test==1:
     # test a single component, using a single thread.
-    comp = TTJets
+    #comp = TTJets
+    comp = T2DegStop_300_270
 #    comp = SMS_T1tttt_2J_mGl1500_mLSP100
     comp.files = comp.files[:1]
     selectedComponents = [comp]
