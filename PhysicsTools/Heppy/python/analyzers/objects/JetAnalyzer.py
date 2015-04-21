@@ -97,16 +97,19 @@ class JetAnalyzer( Analyzer ):
 #            print "\nCalibrating jets %s for lumi %d, event %d" % (self.cfg_ana.jetCol, event.lumi, event.eventId)
             self.jetReCalibrator.correctAll(allJets, rho, delta=self.shiftJEC, metShift=self.deltaMetFromJEC)
         self.allJetsUsedForMET = allJets
-#        print "after. rho",self.rho,self.cfg_ana.collectionPostFix,'allJets len ',len(allJets),'pt', [j.pt() for j in allJets]
+        print "after. rho",self.rho,self.cfg_ana.collectionPostFix,'allJets len ',len(allJets),'pt', [j.pt() for j in allJets]
 
         if self.cfg_comp.isMC:
             self.genJets = [ x for x in self.handles['genJet'].product() ]
             self.matchJets(event, allJets)
+
             if getattr(self.cfg_ana, 'smearJets', False):
                 self.smearJets(event, allJets)
-        
+                print "smearJets",self.cfg_ana.collectionPostFix,'allJets len ',len(allJets),'pt', [j.pt() for j in allJets]
+
 	##Sort Jets by pT 
         allJets.sort(key = lambda j : j.pt(), reverse = True)
+        print "sortJets",self.cfg_ana.collectionPostFix,'allJets len ',len(allJets),'pt', [j.pt() for j in allJets]
 	## Apply jet selection
         self.jets = []
         self.jetsFailId = []
@@ -128,6 +131,10 @@ class JetAnalyzer( Analyzer ):
                     self.jetsFailId.append(jet)
             elif self.testJetID (jet ):
                 self.jetsIdOnly.append(jet)
+        print 'jets',self.cfg_ana.collectionPostFix,'jets len',len(self.jets),'pt', [j.pt() for j in self.jets]
+        print 'jetsFailId',self.cfg_ana.collectionPostFix,'jetsFailId len ',len(self.jetsFailId),'pt', [j.pt() for j in self.jetsFailId]
+        print 'jetsAllNoID',self.cfg_ana.collectionPostFix,'jetsAllNoID len ',len(self.jetsAllNoID),'pt', [j.pt() for j in self.jetsAllNoID]
+        print 'self.jetsIdOnly',self.cfg_ana.collectionPostFix,'jetsIdOnly len ',len(self.jetsIdOnly),'pt', [j.pt() for j in self.jetsIdOnly]
 
         ## Clean Jets from leptons
         leptons = []
@@ -144,7 +151,9 @@ class JetAnalyzer( Analyzer ):
         if hasattr(event, 'selectedLeptons') and self.cfg_ana.cleanSelectedLeptons:
             event.discardedLeptons = [ l for l in leptons if l not in cleanLeptons ]
             event.selectedLeptons  = [ l for l in event.selectedLeptons if l not in event.discardedLeptons ]
-
+        print "lepton cross cleaning",self.cfg_ana.collectionPostFix,'allJets len ',len(allJets),'pt', [j.pt() for j in allJets]
+        print "lepton cross cleaning",self.cfg_ana.collectionPostFix,'allLeptons len ',len(leptons),'pt', [l.pt() for l in leptons]
+ 
         ## Clean Jets from photons
         photons = []
         if hasattr(event, 'selectedPhotons'):
@@ -156,6 +165,7 @@ class JetAnalyzer( Analyzer ):
         self.gamma_cleanJetsAll = cleanNearestJetOnly(self.cleanJetsAll, photons, self.jetGammaDR)
         self.gamma_cleanJets    = [j for j in self.gamma_cleanJetsAll if abs(j.eta()) <  self.cfg_ana.jetEtaCentral ]
         self.gamma_cleanJetsFwd = [j for j in self.gamma_cleanJetsAll if abs(j.eta()) >= self.cfg_ana.jetEtaCentral ]
+        
         ###
 
 
@@ -203,6 +213,8 @@ class JetAnalyzer( Analyzer ):
             #    else:                   event.nGenJets25Fwd += 1
                     
             self.jetFlavour(event)
+
+        print "End",self.cfg_ana.collectionPostFix,'allJets len ',len(allJets),'pt', [j.pt() for j in allJets]
 
         setattr(event,"rho"                    +self.cfg_ana.collectionPostFix, self.rho                    ) 
         setattr(event,"deltaMetFromJEC"        +self.cfg_ana.collectionPostFix, self.deltaMetFromJEC        ) 

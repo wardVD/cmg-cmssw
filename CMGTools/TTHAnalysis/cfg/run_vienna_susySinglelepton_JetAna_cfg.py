@@ -99,7 +99,7 @@ susyCoreSequence.insert(susyCoreSequence.index(ttHCoreEventAna),
 susyCoreSequence.insert(susyCoreSequence.index(ttHCoreEventAna), 
                         ttHSVAna)
 
-#susyCoreSequence.insert(susyCoreSequence.index(jetAna), jetAnaAK4CHS)
+susyCoreSequence.insert(susyCoreSequence.index(jetAna), jetAnaAK4CHS)
 
 ## Single lepton + ST skim
 from CMGTools.TTHAnalysis.analyzers.ttHSTSkimmer import ttHSTSkimmer
