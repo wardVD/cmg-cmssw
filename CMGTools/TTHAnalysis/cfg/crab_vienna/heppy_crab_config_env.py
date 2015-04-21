@@ -16,7 +16,7 @@ debug  = os.environ["DEBUG"] == 'True'
 useAAA = os.environ["USEAAA"] == 'True'
 
 if debug:
-    NJOBS = 4
+    NJOBS = 1
     NEVENTS = 200
 
 print "Will send dataset", dataset, "with", NJOBS, "jobs"

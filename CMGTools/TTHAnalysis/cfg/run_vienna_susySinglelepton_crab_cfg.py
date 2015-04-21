@@ -160,8 +160,8 @@ if test==1:
     comp.files = comp.files[:1]
     selectedComponents = [comp]
     print len(comp.files)
-    #comp.splitFactor = len(comp.files)
-    comp.splitFactor = 1
+    comp.splitFactor = len(comp.files)
+    #comp.splitFactor = 1
 elif test==2:    
     # test all components (1 thread per component).
     for comp in selectedComponents:
@@ -179,7 +179,8 @@ output_service = cfg.Service(
     )
 
 from PhysicsTools.Heppy.utils.cmsswPreprocessor import CmsswPreprocessor
-preprocessor = CmsswPreprocessor("%s/src/JMEAnalysis/JetToolbox/test/jettoolbox_cfg.py" % os.environ['CMSSW_BASE'])
+#preprocessor = CmsswPreprocessor("%s/src/JMEAnalysis/JetToolbox/test/jettoolbox_cfg.py" % os.environ['CMSSW_BASE'])
+preprocessor = CmsswPreprocessor("$CMSSW_BASE/src/JMEAnalysis/JetToolbox/test/jettoolbox_cfg.py")# % os.environ['CMSSW_BASE'])
 
 from PhysicsTools.HeppyCore.framework.eventsfwlite import Events
 config = cfg.Config( components = selectedComponents,
