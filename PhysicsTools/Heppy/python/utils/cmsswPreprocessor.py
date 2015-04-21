@@ -4,7 +4,7 @@ import imp
 from PhysicsTools.HeppyCore.framework.config import CFG
 class CmsswPreprocessor :
 	def __init__(self,configFile,command="cmsRun") :
-		self.configFile=configFile
+		self.configFile=os.path.expandvars(configFile)
 		self.command=command
 	
 	def run(self,component,wd,firstEvent,nEvents):
