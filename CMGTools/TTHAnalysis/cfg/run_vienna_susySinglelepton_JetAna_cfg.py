@@ -1,6 +1,6 @@
 ##########################################################
 ##       CONFIGURATION FOR SUSY SingleLep TREES       ##
-## skim condition: >= 1 loose leptons, no pt cuts or id ##
+## skim condition: >= 0 loose leptons, no pt cuts or id ##
 ##########################################################
 import PhysicsTools.HeppyCore.framework.config as cfg
 
@@ -36,7 +36,7 @@ elif isolation == "relIso03":
     lepAna.loose_muon_relIso = 0.5
 
 # --- LEPTON SKIMMING ---
-ttHLepSkim.minLeptons = 1
+ttHLepSkim.minLeptons = 0
 ttHLepSkim.maxLeptons = 999
 #LepSkim.idCut  = ""
 #LepSkim.ptCuts = []
@@ -143,7 +143,7 @@ from CMGTools.TTHAnalysis.samples.samples_13TeV_PHYS14 import *
 #-------- SEQUENCE
 sequence = cfg.Sequence(susyCoreSequence+[
     ttHEventAna,
-    ttHSTSkimmer,
+#    ttHSTSkimmer,
     ttHReclusterJets,
 #    ttHJetToolboxAnalyzer,
     treeProducer,
