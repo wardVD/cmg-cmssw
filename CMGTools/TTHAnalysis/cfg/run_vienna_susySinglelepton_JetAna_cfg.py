@@ -167,6 +167,7 @@ elif test==2:
         comp.splitFactor = 1
         comp.files = comp.files[:1]
 
+
 from PhysicsTools.Heppy.utils.cmsswPreprocessor import CmsswPreprocessor
 preprocessor = CmsswPreprocessor("%s/src/JMEAnalysis/JetToolbox/test/jettoolbox_cfg.py" % os.environ['CMSSW_BASE'])
 
