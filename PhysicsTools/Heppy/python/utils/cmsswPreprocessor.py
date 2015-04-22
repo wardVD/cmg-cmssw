@@ -18,6 +18,9 @@ class CmsswPreprocessor :
 		if nEvents is None:
 			nEvents = -1
 		cmsswConfig = imp.load_source("cmsRunProcess",self.configFile)
+<<<<<<< HEAD
+>>>>>>> parent of a273384... cmsswPreprocessor in crab
+=======
 >>>>>>> parent of a273384... cmsswPreprocessor in crab
 		inputfiles= []
 		for fn in component.files :
