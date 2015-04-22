@@ -11,8 +11,6 @@ class CmsswPreprocessor :
 		print wd,firstEvent,nEvents
 		if nEvents is None: 
 			nEvents=-1
-		print "CFG", self.configFile
-		print "CFG", os.path.expandvars(self.configFile)
 
 		cmsswConfig = imp.load_source("cmsRunProcess",os.path.expandvars(self.configFile))
 		inputfiles= []
