@@ -180,7 +180,7 @@ output_service = cfg.Service(
 
 from PhysicsTools.Heppy.utils.cmsswPreprocessor import CmsswPreprocessor
 #preprocessor = CmsswPreprocessor("%s/src/JMEAnalysis/JetToolbox/test/jettoolbox_cfg.py" % os.environ['CMSSW_BASE'])
-preprocessor = CmsswPreprocessor("$CMSSW_BASE/src/JMEAnalysis/JetToolbox/test/jettoolbox_cfg.py")# % os.environ['CMSSW_BASE'])
+preprocessor = CmsswPreprocessor("$CMSSW_BASE/src/JMEAnalysis/JetToolbox/python/test/jettoolbox_cfg.py")# % os.environ['CMSSW_BASE'])
 
 from PhysicsTools.HeppyCore.framework.eventsfwlite import Events
 config = cfg.Config( components = selectedComponents,

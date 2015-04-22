@@ -9,8 +9,11 @@ class CmsswPreprocessor :
 	
 	def run(self,component,wd,firstEvent,nEvents):
 		print wd,firstEvent,nEvents
-		if nEvents is None:
-			nEvents = -1
+		if nEvents is None: 
+			nEvents=-1
+		print "CFG", self.configFile
+		print "CFG", os.path.expandvars(self.configFile)
+
 		cmsswConfig = imp.load_source("cmsRunProcess",os.path.expandvars(self.configFile))
 		inputfiles= []
 		for fn in component.files :
