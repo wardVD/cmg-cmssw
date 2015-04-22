@@ -9,19 +9,10 @@ class CmsswPreprocessor :
 	
 	def run(self,component,wd,firstEvent,nEvents):
 		print wd,firstEvent,nEvents
-<<<<<<< HEAD
 		if nEvents is None: 
 			nEvents=-1
 
 		cmsswConfig = imp.load_source("cmsRunProcess",os.path.expandvars(self.configFile))
-=======
-		if nEvents is None:
-			nEvents = -1
-		cmsswConfig = imp.load_source("cmsRunProcess",self.configFile)
-<<<<<<< HEAD
->>>>>>> parent of a273384... cmsswPreprocessor in crab
-=======
->>>>>>> parent of a273384... cmsswPreprocessor in crab
 		inputfiles= []
 		for fn in component.files :
 			if not re.match("file:.*",fn) and not re.match("root:.*",fn) :
