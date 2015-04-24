@@ -45,11 +45,11 @@ class ConfigToolBase(object) :
         saveOrigin(self,1)
         self._path = path.realpath(self._filename)        
         self._path = self._path.split("/src/")
-        self._path = self._path[1].replace("/python","")
+        if len(self._path)>0: self._path = self._path[1].replace("/python","")
         #self._path = "".join(self._path)
         self._path = self._path.replace("/",".")
         self._path = self._path.replace(".py","")
-
+        print "DEBUG self._path",self._path
 
     def __call__(self,process):
         """ Call the instance 
@@ -77,6 +77,7 @@ class ConfigToolBase(object) :
             
     def toolCode(self, process):
         raise NotImplementedError
+
 
             
     ### __copy__(self) returns a copy of the tool

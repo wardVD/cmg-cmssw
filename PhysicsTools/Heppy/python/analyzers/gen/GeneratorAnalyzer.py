@@ -221,11 +221,11 @@ class GeneratorAnalyzer( Analyzer ):
                 id = abs(p.pdgId())
                 if id == 25: 
                     event.genHiggsBosons.append(p)
-                elif id in {23,24}:
+                elif id in [23,24]:
                     event.genVBosons.append(p)
-                elif id in {12,14,16}:
+                elif id in [12,14,16]:
                     event.gennus.append(p)
-                elif id in {11,13}:
+                elif id in [11,13]:
                     #taus to separate vector
                     if abs(p.motherId) == 15:
                         event.gentauleps.append(p)
@@ -244,7 +244,7 @@ class GeneratorAnalyzer( Analyzer ):
                                     #save mu,e from t->W->mu/e
                                     event.genlepsFromTop.append(p)
                 elif id == 15:
-                    if self.allGenTaus or not any([abs(d.pdgId()) in {11,13} for d in realGenDaughters(p)]):
+                    if self.allGenTaus or not any([abs(d.pdgId()) in [11,13] for d in realGenDaughters(p)]):
                         self.addGenTauSusyExtra(p)
                         event.gentaus.append(p)
                 elif id == 6:
@@ -254,7 +254,7 @@ class GeneratorAnalyzer( Analyzer ):
                     momids = [abs(m.pdgId()) for m in realGenMothers(p)]
                     if  6 in momids: event.genbquarksFromTop.append(p)
                     if 25 in momids: event.genbquarksFromH.append(p)
-                if id <= 5 and any([abs(m.pdgId()) in {23,24} for m in realGenMothers(p)]):
+                if id <= 5 and any([abs(m.pdgId()) in [23,24] for m in realGenMothers(p)]):
                     event.genwzquarks.append(p)
 
         #Add LHE weight info
