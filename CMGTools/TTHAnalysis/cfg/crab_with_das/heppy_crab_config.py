@@ -13,15 +13,25 @@ config.JobType.scriptExe = 'heppy_crab_script.sh'
 # config.JobType.sendPythonFolder = True  #doesn't work, not supported yet? do it by hand
 import os
 os.system("tar czf python.tar.gz --dereference --directory $CMSSW_BASE python")
-os.system("tar czf cmgdataset.tar.gz --directory $HOME .cmgdataset")
-os.system("tar czf cafpython.tar.gz --directory /afs/cern.ch/cms/caf/ python")
-config.JobType.inputFiles = ['FrameworkJobReport.xml','heppy_config.py','heppy_crab_script.py','cmgdataset.tar.gz', 'python.tar.gz', 'cafpython.tar.gz']
+#os.system("tar czf cmgdataset.tar.gz --directory $HOME .cmgdataset")
+#os.system("tar czf cafpython.tar.gz --directory /afs/cern.ch/cms/caf/ python")
+#config.JobType.inputFiles = ['FrameworkJobReport.xml','heppy_config.py','heppy_crab_script.py','cmgdataset.tar.gz', 'python.tar.gz', 'cafpython.tar.gz']
+config.JobType.inputFiles = ['FrameworkJobReport.xml','heppy_config.py','heppy_crab_script.py','python.tar.gz' ]
 config.JobType.outputFiles = ['output.log.tgz'] # susySingleLepton.root is automatically send because of the pset file
 
 config.section_("Data")
 config.Data.inputDBS = 'global'
 config.Data.splitting = 'FileBased'
-config.Data.outLFNDirBase = '/store/user/' + os.environ["USER"]
+
+import subprocess
+user = os.environ["USER"]
+p = subprocess.Popen(["crab","checkusername"],stdout=subprocess.PIPE)
+for l in p.stdout.readlines():
+  if l.startswith("Username is: "):
+    fields = l[:-1].split()
+    if len(fields)==3:
+      user = fields[-1]
+config.Data.outLFNDirBase = '/store/user/' + user
 config.Data.publication = False
 #config.Data.primaryDataset = 'MyTest'
 #config.Data.totalUnits = 5

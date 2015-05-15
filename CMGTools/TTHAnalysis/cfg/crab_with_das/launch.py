@@ -7,7 +7,7 @@ from optparse import OptionParser
 # in principle one only needs to modify the following two lines:
 
 parser = OptionParser(usage="python launchall.py [options] component1 [ component2 ...]", \
-                          description="Launch heppy jobs with CRAB3. Component names correspond to the variables defined in heppy_samples.py")
+                          description="Launch heppy jobs with CRAB3. Components correspond to the variables defined in heppy_samples.py (their name attributes)")
 parser.add_option("--production_label", dest="production_label", help="production label", default="heppy")
 parser.add_option("--cmg_version", dest="cmg_version", help="CMG version", \
                       default="CMGTools-from-CMSSW_7_2_3_LocalDevelopments")
@@ -55,8 +55,7 @@ else:
 #from PhysicsTools.HeppyCore.framework.heppy import split
 import pickle
 for comp in selectedComponents:
-    print "generating sample_"+comp.name+".pkl"
-for comp in selectedComponents:
+#    print "generating sample_"+comp.name+".pkl"
     print "Processing ",comp.name
     fout = open("sample_"+comp.name+".pkl","wb")
     pickle.dump(comp,fout)

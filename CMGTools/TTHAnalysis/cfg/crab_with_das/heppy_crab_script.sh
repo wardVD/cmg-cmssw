@@ -5,7 +5,7 @@ echo $CMSSW_BASE
 # extract exported necessary stuff
 #tar xzf cmgdataset.tar.gz --directory $HOME
 tar xzf python.tar.gz --directory $CMSSW_BASE
-tar xzf cafpython.tar.gz --directory $CMSSW_BASE
+#tar xzf cafpython.tar.gz --directory $CMSSW_BASE
 
 # uncomment for debuging purposes
 
