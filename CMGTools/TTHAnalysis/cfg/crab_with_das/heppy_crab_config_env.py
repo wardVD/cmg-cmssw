@@ -35,8 +35,6 @@ print "Will send dataset", dataset , "with", config.Data.unitsPerJob, " files / 
 #config.General.requestName = sample + "_" + cmg_version # task name
 config.General.requestName = production_label+"_"+cmg_version # task name
 config.General.workArea = 'crab_' + production_label + "_" + sample # crab dir name
-+
-
 
 ## this will divide task in *exactly* NJOBS jobs (for this we need JobType.pluginName = 'PrivateMC' and Data.splitting = 'EventBased')
 #config.Data.unitsPerJob = 10
