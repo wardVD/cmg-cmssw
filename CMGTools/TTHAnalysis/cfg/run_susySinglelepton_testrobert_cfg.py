@@ -65,8 +65,8 @@ photonAna.do_mc_match = False
 genAna.allgenTaus = True
 
 #use latest JEC
-#jetAna.recalibrationType="AK4PFchs"
-#jetAna.mcGT="Summer15_V4_MC"
+jetAna.recalibrationType="AK4PFchs"
+jetAna.mcGT="Summer15_V4_MC"
 
 #-------- ADDITIONAL ANALYZERS -----------
 
@@ -136,8 +136,7 @@ susyCoreSequence.insert(susyCoreSequence.index(skimAnalyzer),
 #-------- SAMPLES AND TRIGGERS -----------
 
 
-#from CMGTools.RootTools.samples.samples_13TeV_74X import triggers_mumu_iso, triggers_mumu_noniso, triggers_ee, triggers_3e, triggers_mue, triggers_1mu_iso, triggers_1e
-from CMGTools.RootTools.samples.triggers_13TeV_PHYS14 import triggers_mumu_iso, triggers_mumu_noniso, triggers_ee, triggers_3e, triggers_mue, triggers_1mu_iso, triggers_1e
+from CMGTools.TTHAnalysis.samples.samples_13TeV_PHYS14 import triggers_mumu_iso, triggers_mumu_noniso, triggers_ee, triggers_3e, triggers_mue, triggers_1mu_iso, triggers_1e
 triggerFlagsAna.triggerBits = {
     'DoubleMu' : triggers_mumu_iso,
     'DoubleMuNoIso' : triggers_mumu_noniso,
@@ -148,20 +147,19 @@ triggerFlagsAna.triggerBits = {
     'SingleEl' : triggers_1e,
 }
 
-from CMGTools.RootTools.samples.samples_13TeV_74X import *
-#from CMGTools.RootTools.samples.samples_13TeV_CSA14v2 import SingleMu
+from CMGTools.TTHAnalysis.samples.samples_13TeV_PHYS14 import *
+from CMGTools.TTHAnalysis.samples.samples_13TeV_CSA14v2 import SingleMu
 
-# selectedComponents = [
-#   ] + WJetsToLNuHT + DYJetsM50HT + [ #DYJetsToLL_M50,
-#    TTJets ]+ SingleTop +[
-#    TTWJets,TTZJets, TTH,
-#    WZJetsTo3LNu, ZZTo4L,
-#    #GGHZZ4L, GGHTT, VBFTT, 
-#    SMS_T1tttt_2J_mGl1500_mLSP100, SMS_T1tttt_2J_mGl1200_mLSP800,
-#    T5ttttDeg_mGo1000_mStop300_mCh285_mChi280, T5ttttDeg_mGo1000_mStop300_mCh285_mChi280_dil,
-#    T5qqqqWW_mGo1200_mCh1000_mChi800_dilep, T5qqqqWWDeg_mGo1000_mCh315_mChi300_dilep
-# ]
-
+selectedComponents = [
+  ] + WJetsToLNuHT + DYJetsM50HT + [ #DYJetsToLL_M50,
+   TTJets ]+ SingleTop +[
+   TTWJets,TTZJets, TTH,
+   WZJetsTo3LNu, ZZTo4L,
+   #GGHZZ4L, GGHTT, VBFTT, 
+   SMS_T1tttt_2J_mGl1500_mLSP100, SMS_T1tttt_2J_mGl1200_mLSP800,
+   T5ttttDeg_mGo1000_mStop300_mCh285_mChi280, T5ttttDeg_mGo1000_mStop300_mCh285_mChi280_dil,
+   T5qqqqWW_mGo1200_mCh1000_mChi800_dilep, T5qqqqWWDeg_mGo1000_mCh315_mChi300_dilep
+]
 if False:
     ttHLepSkim.minLeptons = 1
     QCDPtEMEnriched.remove(QCD_Pt10to20_EMEnriched)
@@ -185,7 +183,7 @@ sequence = cfg.Sequence(susyCoreSequence+[
 
 #-------- HOW TO RUN -----------
 
-from PhysicsTools.HeppyCore.framework.heppy_loop import getHeppyOption
+from PhysicsTools.HeppyCore.framework.heppy import getHeppyOption
 test = getHeppyOption('test')
 print "Running with option %s"%test
 if test == '1':
@@ -223,15 +221,13 @@ elif test == 'SingleMu':
     comp.splitFactor = 1
     selectedComponents = [ comp ]
 elif test == '74X-MC':
-    from CMGTools.RootTools.samples.samples_13TeV_74X import *
+    from CMGTools.TTHAnalysis.samples.samples_13TeV_74X import *
     what = getHeppyOption("sample")
     if what == "TT":
         ttHLepSkim.minLeptons = 0
         selectedComponents = [ TTJets ]
     elif what == "Z":
         selectedComponents = [ ZEE_bx25, ZMM_bx25, ZTT_bx25 ]
-    elif what == 'DY':
-        selectedComponents = [DYJetsToLL_M50]
     else:
         selectedComponents = RelVals740
     if not getHeppyOption("all"):
@@ -240,8 +236,8 @@ elif test == '74X-MC':
             comp.splitFactor = 1
             comp.fineSplitFactor = 1 if getHeppyOption("single") else 4
 elif test == '74X-Data':
-    from CMGTools.RootTools.samples.samples_13TeV_74X import *
-    from CMGTools.RootTools.samples.samples_8TeVReReco_74X import *
+    from CMGTools.TTHAnalysis.samples.samples_13TeV_74X import *
+    from CMGTools.TTHAnalysis.samples.samples_8TeVReReco_74X import *
     what = getHeppyOption("sample")
     if what == "SingleMu":
         selectedComponents = [ SingleMu_740p9 ]
