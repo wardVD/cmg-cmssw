@@ -83,7 +83,7 @@ ttHReclusterJets = cfg.Analyzer(
 	etaSubJet = 5.0,
 			)
 
-from CMGTools.RootTools.samples.triggers_13_TeV_Spring15_1l import *
+from CMGTools.RootTools.samples.triggers_13TeV_Spring15_1l import *
 
 triggerFlagsAna.triggerBits = {
 #put trigger here for data
