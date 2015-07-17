@@ -185,6 +185,8 @@ def main( options, args, parser ):
         pool.close()
         pool.join()
     else:
+        print len(selComps)
+        print selComps
         # when running only one loop, do not use multiprocessor module.
         # then, the exceptions are visible -> use only one sample for testing
         global loop
