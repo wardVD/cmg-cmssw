@@ -155,6 +155,7 @@ sequence = cfg.Sequence(susyCoreSequence+[
 #-------- HOW TO RUN
 test = 1
 if test==1:
+	print "In test == 1"
         # test a single component, using a single thread.
         comp = DYJetsToLL_M50
         comp.files = comp.files[:1]
