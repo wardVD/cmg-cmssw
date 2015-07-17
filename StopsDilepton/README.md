@@ -1,13 +1,13 @@
 # Stops-dilepton 
-cmsrel CMSSW_7_2_3_patch1;
+cmsrel CMSSW_7_4_7;
 
-cd CMSSW_7_2_3_patch1/src ;
+cd CMSSW_7_4_7/src ;
 
 cmsenv ;
 
 git cms-addpkg FWCore/Version
 
-git clone https://github.com/wardVD/Stops-dilepton StopsDilepton
+git clone https://github.com/wardVD/cmg-cmssw/Stops-dilepton StopsDilepton
 
 
 ** To compile TMVA **
