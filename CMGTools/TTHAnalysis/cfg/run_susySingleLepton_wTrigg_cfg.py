@@ -151,14 +151,12 @@ sequence = cfg.Sequence(susyCoreSequence+[
                 treeProducer,
                 ])
 
-
 #-------- HOW TO RUN
 test = 1
 if test==1:
         # test a single component, using a single thread.
         comp = DYJetsToLL_M50
-	print comp
-        comp.files = comp.files[:1]
+	comp.files = comp.files[:1]
         selectedComponents = [comp]
 	comp.splitFactor = 1
 elif test==2:
@@ -191,6 +189,8 @@ elif test=="data":
                 comp.fineSplitFactor = 10
                 #comp.files = comp.files[:1]
 
+
+print comp
 
 from PhysicsTools.HeppyCore.framework.eventsfwlite import Events
 config = cfg.Config( components = selectedComponents,
