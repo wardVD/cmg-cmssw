@@ -101,8 +101,8 @@ from PhysicsTools.HeppyCore.framework.heppy_loop import getHeppyOption
 test = '1'
 if test == '1':
     comp = DYJetsToLL_M50
-    comp.files = comp.files[:1]
-    comp.splitFactor = 2
+    #comp.files = comp.files[:10]
+    comp.fineSplitFactor = 1
     selectedComponents = [ comp ]
 elif test == '2':
     for comp in selectedComponents:
