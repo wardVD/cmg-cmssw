@@ -81,9 +81,10 @@ triggerFlagsAna.triggerBits = {
 
 from CMGTools.RootTools.samples.samples_13TeV_74X import *
 
-selectedComponents = [DYJetsToLL_M50_HT100to200,DYJetsToLL_M50_HT200to400,DYJetsToLL_M50_HT400to600,DYJetsToLL_M50_HT600toInf,
+selectedComponents = [#DYJetsToLL_M50,
+#DYJetsToLL_M50_HT100to200,
 TTJets, 
-WJetsToLNu_HT100to200, WJetsToLNu_HT200to400, WJetsToLNu_HT400to600, WJetsToLNu_HT600toInf
+#WJetsToLNu_HT100to200, WJetsToLNu_HT200to400, WJetsToLNu_HT400to600, WJetsToLNu_HT600toInf
 ] 
     
 #-------- SEQUENCE -----------
@@ -114,9 +115,9 @@ elif test == '2':
         comp.fineSplitFactor = 1
 elif test == 'allbkg':
     for comp in selectedComponents:
-        comp.files = comp.files[:1]
-        comp.splitFactor = 1
-        comp.fineSplitFactor = 1
+        comp.files = comp.files[:]
+        #comp.splitFactor = 1
+        comp.fineSplitFactor = 2
 
 ## output histogram
 outputService=[]
